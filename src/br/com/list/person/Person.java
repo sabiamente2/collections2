@@ -16,10 +16,22 @@ public class Person {
 		this.gender = genero;
 	}
 	
+	public Person(String[] split) {
+		this.name = split[0];
+		boolean genderEmpty = this.genderEmpty(split);
+		if (!genderEmpty) this.gender = split[1];
+	}
+	
+	
+	public boolean genderEmpty(String[] arr) {
+		if (arr.length == 1) return true;
+		else return false;
+	}
+	
 	/** To String
 	 * 
 	 */
 	public String toString() {
-		return "Nome: " + this.name + " Gênero: " + this.gender;
+		return name + " " + gender;
 	}
 }

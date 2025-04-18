@@ -17,8 +17,11 @@ public class PersonList {
 	 * @return boolean - retorna se genero é valido
 	 */
 	public boolean putInList(String nome, String genero){
-		boolean gendervalid = true;
-		boolean genderinvalid = false;
+		boolean invalid = false;
+		boolean genderValidation = this.genderValidation(genero);
+		
+		if (genderValidation == invalid) return genderValidation;
+
 		if (genero.equalsIgnoreCase("f")) {
 			genero = "Feminino";
 			fen.add(new Person(nome, genero));
@@ -28,6 +31,12 @@ public class PersonList {
 			genero = "Masculino";
 			male.add(new Person(nome, genero));
 		}
-		return(genero.equalsIgnoreCase("f") || genero.equalsIgnoreCase("m")) ? gendervalid : genderinvalid;
+		return genderValidation;
+	}
+
+	
+	
+	boolean genderValidation(String gender) {
+		return(gender.equalsIgnoreCase("f") || gender.equalsIgnoreCase("m")) ? true : false;
 	}
 }

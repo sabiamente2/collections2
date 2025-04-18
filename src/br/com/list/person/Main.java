@@ -31,25 +31,31 @@ public class Main {
 		t.out("***** Inicio *****");
 		t.out("O que deseja fazer?");
 		t.ln();
-		t.out("Digite \"1\" para Tarefa 1.");
-		t.out("Digite \"2\" para tarefa 2");
-		t.out("Digite \"0\" para finalizar programa.");
-		t.ln();
-		
-		int entrada = s.nextInt();
-		
-		t.ln();
-		if (entrada == 1) {
-			return 1;
-		}
-		else if (entrada == 2) {
-			return 2;
-		}
-		else if (entrada == 0) {
-			return 0;
-		}
-		else t.out("Valor invalido.");
-		return -1;
+		do {
+			t.out("Digite \"1\" para Tarefa 1.");
+			t.out("Digite \"2\" para tarefa 2");
+			t.out("Digite \"0\" para finalizar programa.");
+			t.ln();
+			
+			String entrada = s.next();
+			
+			t.ln();
+			
+			if (entrada.equalsIgnoreCase("1")) {
+				return 1;
+			}
+			
+			else if (entrada.equalsIgnoreCase("2")) {
+				return 2;
+			}
+			
+			else if (entrada.equalsIgnoreCase("0")) {
+				return 0;
+			}
+			
+			else t.out("Valor invalido.");
+			
+		} while (true);
 	}
 	
 	
@@ -81,10 +87,6 @@ public class Main {
 	}
 	
 	static void task2() {
-		String[] arr = new String[2];
-		String nome = arr[0];
-		String genero = arr[1];
-		
 		
 		t.out("***** Tarefa 2 *****");
 		t.ln();
@@ -92,41 +94,63 @@ public class Main {
 		t.out("Aqui será necessário a entrada de nome gênero");
 		t.out("Logo serão imprimidos no console separado por genero");
 		t.ln();
+		
 		int i = 1;
+		
 		do {
+			
 			t.out("Digite o nome e o gênero separados por \"-\"");
 			t.out("genero deve ser \"m\" para masculino e \"f\" para feminino");
-			arr = s.next().split("-", 2);
+			
+			String[] arr  = new Person(s.next().split("-")).toString().split(" ");
+			String nome = arr[0];
+			String genero = arr[1];
 			t.ln();
 			
-			t.out("O nome " + nome + " está correto?");
+			boolean genderEmpty = new Person(arr).genderEmpty(arr);
+
+			
 			mensageValidName(nome);
+			
 			do {
+				
 				t.out("Digite \"s\" ou \"n\"");
 				String input = s.next();
 				t.ln();
+				
 				if (input.equalsIgnoreCase("s")) break;
+				
 				else if (input.equalsIgnoreCase("n")) {
-					t.ln();
+					
 					t.out("Digite o nome novamente");
 					nome = s.next();
+					
 					mensageValidName(nome);
 				}
+				
 				else t.out("entrada inválida");
+				
 				t.ln();
+				
 			} while(true);
 			
 			do {
+				
 				boolean genderValid = true;
 				boolean genderInvalid = false;
-				lists.putInList(nome, genero);
-				if (lists.putInList(nome, genero) == genderInvalid) {
+				
+				boolean putIn = lists.putInList(nome, genero);
+				
+				if (putIn == genderValid) break;
+				
+				else if (putIn == genderInvalid) {
+					
 					t.out("Gênero invalido");
 					t.out("Gênero deve ser \"f\" ou \"m\"");
-					t.out("Digite o gênero novament");
+					t.out("Digite o gênero novamente");
 					genero = s.next();
 				}
-				if (lists.putInList(nome, genero) == genderValid) break;
+				
 			}while(true);
 			t.ln();
 			t.out("Deseja cadastrar outra pessoa?");
@@ -142,9 +166,18 @@ public class Main {
 			} while(true);
 				
 		} while(i == 1);
+		t.out("***** Gênero feminino *****");
+		t.ln();
 		
 		lists.fen.forEach(System.out :: println);
+		t.ln();
+		
+		t.out("***** Gênero Masculino *****");
+		t.ln();
+		
 		lists.male.forEach(System.out :: println);
+		t.ln();
+		
 	}
 	
 	/** Métodp imprime uma mensagem no console perguntando se o parametro "nome" está correto
@@ -155,4 +188,6 @@ public class Main {
 	static void mensageValidName(String nome) {
 		t.out("O nome " + nome + " está correto?");
 	}
+	
+	
 }
